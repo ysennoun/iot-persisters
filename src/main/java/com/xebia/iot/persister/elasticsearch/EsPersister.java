@@ -48,9 +48,12 @@ public class EsPersister extends Persister {
                             .endObject()
                     )
                     .get();
-            client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void close() {
+        client.close();
     }
 }

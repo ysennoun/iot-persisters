@@ -7,4 +7,6 @@ public class ConsolePersister extends Persister {
     public void persiste(String data) {
         System.out.println(data);
     }
+
+    public void close(){}
 }

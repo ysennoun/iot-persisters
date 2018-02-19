@@ -3,12 +3,10 @@ package com.xebia.iot.persister;
 import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
-@ESIntegTestCase.ClusterScope(scope = ESIntegTestCase.Scope.TEST, numDataNodes = 0, numClientNodes = 0, transportClientRatio = 0.0,
-        autoMinMasterNodes = false)
+@ESIntegTestCase.ClusterScope(scope = ESIntegTestCase.Scope.SUITE, numDataNodes = 1)
 public class EsPersisterTest extends ESIntegTestCase {
-
     @Test
-    public void test() throws Exception {
+    public void test() {
         assertTrue(true);
     }
 }
