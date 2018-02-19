@@ -35,16 +35,13 @@ public class EsPersister extends Persister {
                 );
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            System.out.println("initClient ");
-            //System.exit(1);
+            System.exit(1);
         }
     }
 
     public void persiste(String data) {
         try {
-            System.out.println("docNum " + docNum);
             docNum++;
-            System.out.println("docNum " + docNum);
             client.prepareIndex(
                     persisterInfo.getIndexName(),
                     persisterInfo.getDocumentTypeName(),
@@ -55,7 +52,6 @@ public class EsPersister extends Persister {
                             .endObject()
                     )
                     .get();
-            System.out.println("docNum " + docNum);
         } catch (IOException e) {
             e.printStackTrace();
         }
