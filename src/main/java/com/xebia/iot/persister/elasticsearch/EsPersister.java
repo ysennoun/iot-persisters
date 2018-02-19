@@ -16,6 +16,7 @@ public class EsPersister extends Persister {
 
     private EsPersisterInfo persisterInfo;
     private TransportClient client;
+    private static int docNum = 0;
 
     public EsPersister(EsPersisterInfo persisterInfo) {
         this.persisterInfo = persisterInfo;
@@ -24,7 +25,6 @@ public class EsPersister extends Persister {
 
     private void initClient() {
         try {
-            //System.setProperty("es.set.netty.runtime.available.processors", "false"); //issue: https://github.com/elastic/elasticsearch/issues/25741
             client = new PreBuiltTransportClient(Settings.EMPTY);
             for(int i=0; i<persisterInfo.getEsClusterHost().length; i++)
                 client.addTransportAddress(
@@ -35,19 +35,27 @@ public class EsPersister extends Persister {
                 );
         } catch (UnknownHostException e) {
             e.printStackTrace();
-            System.exit(1);
+            System.out.println("initClient ");
+            //System.exit(1);
         }
     }
 
     public void persiste(String data) {
         try {
-            client.prepareIndex(persisterInfo.getIndexName(), persisterInfo.getDocumentTypeName())
+            System.out.println("docNum " + docNum);
+            docNum++;
+            System.out.println("docNum " + docNum);
+            client.prepareIndex(
+                    persisterInfo.getIndexName(),
+                    persisterInfo.getDocumentTypeName(),
+                    Integer.toString(docNum))
                     .setSource(jsonBuilder()
                             .startObject()
                             .field("message", data)
                             .endObject()
                     )
                     .get();
+            System.out.println("docNum " + docNum);
         } catch (IOException e) {
             e.printStackTrace();
         }
